@@ -9,7 +9,7 @@ current `poolSize` is `4` but this can be changed to demonstrate blocked input.
 ## How to run
 ```bash
 $shell_a> go get -v ./... # Download dependencies
-$shell_a> go run main.go dispatcher.go sequencer.go
+$shell_a> go run main.go dispatcher.go sequencer.go worker.go
 ```
 ```bash
 $shell_b> curl localhost:3000
