@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-// This is a blocking worker. Probs shouldn't use this directly.
 func blockingWorker(i int, sequencer *Sequencer, incr <-chan int) {
 	for {
 		select {
