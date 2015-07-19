@@ -22,6 +22,7 @@ func blockingWorker(i int, sequencer *Sequencer, incr <-chan int) {
 func workerPool(sequencer *Sequencer, notify <-chan int, poolSize int) {
 	buffer := []int{} // Buffer used in case all workers are busy
 	queue := make(chan int, poolSize)
+	defer close(queue)
 	for i := 0; i < poolSize; i++ {
 		go blockingWorker(i, sequencer, queue)
 	}
