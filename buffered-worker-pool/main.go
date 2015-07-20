@@ -10,11 +10,14 @@ const poolSize = 4
 
 func main() {
 	sequencer := NewSequencer()
-	notify := make(chan int)
-	defer close(notify)
-	go workerPool(sequencer, notify, poolSize)
+	worker := NewWorker(sequencer)
+	pool := NewWorkerPool(worker, poolSize)
 
-	dispatcher := NewDispatcher(sequencer, notify)
+	queue := make(chan int)
+	defer close(queue)
+	go pool.ListenAndServe(queue)
+
+	dispatcher := NewDispatcher(sequencer, queue)
 	router := httprouter.New()
 	router.GET("/", dispatcher.Total)
 	router.POST("/", dispatcher.Increment)
